@@ -1,7 +1,4 @@
 # E621_Toolkit
-      __        __   ___     __       __  ___  ___        __ 
-|__/ |__) |  | |  \ |__     /__  \ / /__   |  |__   |\/| /__ 
-|  \ |  \ \__/ |__/ |___    .__/  |  .__/  |  |___  |  | .__/
 https://krude-systems.net/redirect.html
 Unified E621 Toolkit - 21Mar2025
 
