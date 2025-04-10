@@ -92,6 +92,7 @@ while True:
     print(str(searchHits) + " results found!")
 
     while True:
+        print("Note: ID and IMG pulls image from e621's website as a preview and does a standard URL search to find said image.")
         dataReturnSetting = input("Print just post ID, ID and IMG, or entire JSON [i/ii/j]?: ")
         if dataReturnSetting == "i" or dataReturnSetting == "j" or dataReturnSetting == "ii":
             break
