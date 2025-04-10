@@ -5,12 +5,13 @@ def append(input):
 		myfile.write(input)
 		myfile.write("\n")
 
-#SET ENVIORMENT VARIABLES
+#SET ENVIORMENT VARIABLES your LOGIN_USERNAME and your API_KEY followed by the TARGET_USER_ID
 LOGIN_USERNAME = ""
 API_KEY = ""
 TARGET_USER_ID = ""
 #NOTE: If your login username does not have access to view the targets favorites you will not be able to download them.
 
+append('mkdir favList')
 #632 faveorites pages
 for i in range(int(input("Enter number of pages to download (pages that do not exist may error): "))):
 	append('echo "' + str(i+1) + '"')
