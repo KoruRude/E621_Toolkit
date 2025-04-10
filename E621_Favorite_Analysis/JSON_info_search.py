@@ -1,3 +1,5 @@
+from term_image.image import from_url
+
 for i in range(50):
     print("")
 
@@ -90,11 +92,11 @@ while True:
     print(str(searchHits) + " results found!")
 
     while True:
-        dataReturnSetting = input("Print just post ID or entire JSON [i/j]?: ")
-        if dataReturnSetting == "i" or dataReturnSetting == "j":
+        dataReturnSetting = input("Print just post ID, ID and IMG, or entire JSON [i/ii/j]?: ")
+        if dataReturnSetting == "i" or dataReturnSetting == "j" or dataReturnSetting == "ii":
             break
         else:
-            print('Please enter "i" or "j"')
+            print('Please enter "i", "ii", or "j"')
 
 
     while True:
@@ -114,6 +116,20 @@ while True:
         elif dataReturnSetting == "j":
             print("Entry JSON:")
             print(str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])]))
+        elif dataReturnSetting == "ii":
+            tmp = str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])]).find('"preview":{') + 7
+            tmp = str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])])[tmp::]
+
+            urlTargetIndex1 = tmp.find('"url":"') + 7
+            urlTargetIndex2 = tmp.find('"},"sample":')
+            extractedUrl = tmp[urlTargetIndex1:urlTargetIndex2]
+
+            print("Entry POST ID: " + str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])])[6:str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])]).find(",")])
+            if (-1 == extractedUrl.find(".webm") and -1 == extractedUrl.find(".gif")):
+                print("PostIMG:")
+                print(from_url(extractedUrl))
+            else:
+                print("Unsupported Media Type")
         else:
             print("LOGIC ERROR, dataReturnSetting statment failed.")
         print("=======END OF RESULT=======")
