@@ -92,7 +92,6 @@ while True:
     print(str(searchHits) + " results found!")
 
     while True:
-        print("Note: ID and IMG pulls image from e621's website as a preview and does a standard URL search to find said image.")
         dataReturnSetting = input("Print just post ID, ID and IMG, or entire JSON [i/ii/j]?: ")
         if dataReturnSetting == "i" or dataReturnSetting == "j" or dataReturnSetting == "ii":
             break
@@ -118,19 +117,32 @@ while True:
             print("Entry JSON:")
             print(str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])]))
         elif dataReturnSetting == "ii":
-            tmp = str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])]).find('"preview":{') + 7
-            tmp = str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])])[tmp::]
 
-            urlTargetIndex1 = tmp.find('"url":"') + 7
-            urlTargetIndex2 = tmp.find('"},"sample":')
-            extractedUrl = tmp[urlTargetIndex1:urlTargetIndex2]
+            urlTargetIndex1 = str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])]).find('"url":"') + 7
+            urlTargetIndex2 = str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])]).find('"},"preview":{')
+            extractedUrl = str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])])[urlTargetIndex1:urlTargetIndex2]
 
             print("Entry POST ID: " + str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])])[6:str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])]).find(",")])
-            if (-1 == extractedUrl.find(".webm") and -1 == extractedUrl.find(".gif")):
+            if (not (-1 != extractedUrl.find(".webm") or -1 != extractedUrl.find(".gif"))):
                 print("PostIMG:")
                 print(from_url(extractedUrl))
             else:
-                print("Unsupported Media Type")
+                print("Unsupported Media Type, showing preview")
+
+                tmp = str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])]).find('"preview":{') + 7
+                tmp = str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])])[tmp::]
+
+                urlTargetIndex1 = tmp.find('"url":"') + 7
+                urlTargetIndex2 = tmp.find('"},"sample":')
+                extractedUrl = tmp[urlTargetIndex1:urlTargetIndex2]
+
+                if (not ( -1 != extractedUrl.find(".webm") or -1 != extractedUrl.find(".gif"))):
+                    print("PreviewIMG:")
+                    print(from_url(extractedUrl))
+                else:
+                    print("Unsupported Media Type; boo-womp sorry")
+            
+            
         else:
             print("LOGIC ERROR, dataReturnSetting statment failed.")
         print("=======END OF RESULT=======")
