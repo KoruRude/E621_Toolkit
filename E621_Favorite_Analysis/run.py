@@ -8,7 +8,7 @@ print("|  \ |  \ \__/ |__/ |___    .__/  |  .__/  |  |___  |  | .__/")
 print("https://krude-systems.net/redirect.html")
 print("Unified E621 Toolkit Controller - 21Mar2025")
 print("")
-print("Dependencies: wget, python3")
+print("Dependencies: wget, python3, term-image (pip install term-image)")
 
 while True:
     print('Enter "exit" to exit.')
