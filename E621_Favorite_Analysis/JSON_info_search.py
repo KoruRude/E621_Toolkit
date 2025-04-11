@@ -16,12 +16,32 @@ print("Example filepath: ~favList/favorites_Page27.json")
 print("")
 
 #mail control system
+def displayPost(postString):
+    #display post number, post link, and immage or preview
+    print("Entry POST ID: " + str(postString[6:postString.find(",")]))
+    print("Link to post: https://e621.net/posts/" + str(postString[6:postString.find(",")]))
+
+    urlTargetIndex1 = postString.find('"url":"') + 7
+    urlTargetIndex2 = postString.find('"},"preview":')
+    extractedUrl = postString[urlTargetIndex1:urlTargetIndex2]
+    if (-1 == extractedUrl.find(".webm") and -1 == extractedUrl.find(".gif")):
+        print("PostIMG:")
+        print(from_url(extractedUrl))
+    else:
+        tmp = str(postString[postString.find('"preview":{') + 7::])
+        urlTargetIndex1 = tmp.find('"url":"') + 7
+        urlTargetIndex2 = tmp.find('"},"sample":')
+        extractedUrl = tmp[urlTargetIndex1:urlTargetIndex2]
+        print(from_url(extractedUrl))
+        print("Preview is displayed because, original is animated.")
+    print("Entry POST ID: " + str(postString[6:postString.find(",")]))
+    print("Link to post: https://e621.net/posts/" + str(postString[6:postString.find(",")]))
 
 
 print("Prgm will build array out of files specified by following range:")
 
 pageStart = int(input("Enter page start range [ex: 1]: "))
-pageEnd = int(input("Enter page End range [ex: 632]: ")) +1
+pageEnd = int(input("Enter page End range [ex: 7]: ")) +1
 
 #BEGIN LOGIC ARRAY BUILD
 print("Loading main logic array...")
@@ -108,33 +128,8 @@ while True:
             break
         try:
             resultQuery = int(resultQuery)
-            
-            print("=======RESULT NUMBER " + str(resultQuery) + "=======")
-            print("Page number: " + str(searchArray[resultQuery][0]))
-            print("Number on page: " + str(searchArray[resultQuery][1]))
 
-            if dataReturnSetting == "i":
-                print("Entry POST ID: " + str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])])[6:str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])]).find(",")])
-            elif dataReturnSetting == "j":
-                print("Entry JSON:")
-                print(str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])]))
-            elif dataReturnSetting == "ii":
-                tmp = str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])]).find('"preview":{') + 7
-                tmp = str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])])[tmp::]
-
-                urlTargetIndex1 = tmp.find('"url":"') + 7
-                urlTargetIndex2 = tmp.find('"},"sample":')
-                extractedUrl = tmp[urlTargetIndex1:urlTargetIndex2]
-
-                print("Entry POST ID: " + str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])])[6:str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])]).find(",")])
-                if (-1 == extractedUrl.find(".webm") and -1 == extractedUrl.find(".gif")):
-                    print("PostIMG:")
-                    print(from_url(extractedUrl))
-                else:
-                    print("Unsupported Media Type")
-            else:
-                print("LOGIC ERROR, dataReturnSetting statment failed.")
-            print("=======END OF RESULT=======")
-        
+            displayPost(str(mainArray[int(searchArray[resultQuery][0])][int(searchArray[resultQuery][1])]))
+            print("Entry Number: " + str(resultQuery))
         except:
             print("=======UNKNOWN INPUT INT ERROR, PLEASE TRY AGAIN=======")
